@@ -146,6 +146,14 @@ export default function Home() {
     return matchedImages;
   }
 
+  const getVarNumber = (url: string): number => {
+    const match = url.match(/var(\d+|ALL)/);
+    if (match) {
+      return match[1] === 'ALL' ? -1 : parseInt(match[1], 10);
+    }
+    return -1;
+  };
+
 
 
   function getRandomImageAndColor(headsImages: string[], bodiesImages: string[]): { head: string; body: string; color: string } {
@@ -158,43 +166,35 @@ export default function Home() {
     }
 
     // Function to extract the var number from the URL
-    const getVarNumber = (url: string): number => {
-      const match = url.match(/var(\d+|ALL)/);
-      if (match) {
-        return match[1] === 'ALL' ? -1 : parseInt(match[1], 10);
-      }
-      return -1;
-    };
-
-    // Get a random body image
     const randomHead = getRandomElementFromArray(headsImages);
     const headVarNumber = getVarNumber(randomHead);
 
-    // Get a random head image that matches the body’s var number
     let randomBody: string;
-    if (headVarNumber === -1) { // If body has varALL
+    if (headVarNumber === -1) {
       randomBody = getRandomElementFromArray(bodiesImages);
     } else {
       do {
         randomBody = getRandomElementFromArray(bodiesImages);
-      } while (getVarNumber(randomBody) !== headVarNumber);
+      } while (getVarNumber(randomBody) !== headVarNumber && getVarNumber(randomBody) !== -1);
     }
 
     // Generate a random color
     const randomColor = getRandomHexColor();
 
     console.log("Shuffled results", headVarNumber, getVarNumber(randomHead), randomColor);
-    setColor(randomColor)
-    setselectedBody(randomBody)
-    setselectedHead(randomHead)
-    setBodyType(randomHead)
-    setHeadType(randomHead)
+    setColor(randomColor);
+    setselectedBody(randomBody);
+    setselectedHead(randomHead);
+    setBodyType(randomHead);
+    setHeadType(randomHead);
+
     return {
       head: randomHead,
       body: randomBody,
       color: randomColor,
     };
   }
+
 
 
   useEffect(() => {
@@ -319,21 +319,21 @@ export default function Home() {
 
                     {imagesLoaded ?
 
-                    <div className="flex flex-wrap gap-3 h-[400px] overflow-y-scroll">
-                      {
-                        headsImages.map((url, index) => (
-                          <div key={index} className="border-2 border-black cursor-pointer max-h-[150px]"
-                            onClick={() => {
-                              setselectedHead(url)
-                              setBodyType(url)
-                            }}
-                          >
-                            <img key={index} src={url} alt={`Image ${index}`} style={{ width: '150px', height: '150px' }} />
-                          </div>
-                        ))
-                      }
-                    </div>
-                    :
+                      <div className="flex flex-wrap gap-3 h-[400px] overflow-y-scroll">
+                        {
+                          headsImages.map((url, index) => (
+                            <div key={index} className="border-2 border-black cursor-pointer max-h-[150px]"
+                              onClick={() => {
+                                setselectedHead(url)
+                                setBodyType(url)
+                              }}
+                            >
+                              <img key={index} src={url} alt={`Image ${index}`} style={{ width: '150px', height: '150px' }} />
+                            </div>
+                          ))
+                        }
+                      </div>
+                      :
                       <Loader />
 
                     }
