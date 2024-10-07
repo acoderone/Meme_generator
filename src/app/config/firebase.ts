@@ -2,14 +2,14 @@ import { initializeApp } from 'firebase/app';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyD7UKCW_dgzRHLPZ7ZC_NPVIdrJPLP5vH8",
-    authDomain: "meme-1851b.firebaseapp.com",
-    projectId: "meme-1851b",
-    storageBucket: "meme-1851b.appspot.com",
-    messagingSenderId: "193393556959",
-    appId: "1:193393556959:web:e2fb6d773fde3ed10e186a",
-    measurementId: "G-7DDT6MN2QJ"
-  };
+  apiKey: "AIzaSyDXJ5-mHMMfisr6k_9ghnxhwKUt8AhpZeU",
+  authDomain: "image-27e04.firebaseapp.com",
+  projectId: "image-27e04",
+  storageBucket: "image-27e04.appspot.com",
+  messagingSenderId: "933418615350",
+  appId: "1:933418615350:web:8b5b8ac538afedae080e97",
+  measurementId: "G-2ZZF7CCR1Y"
+};
 
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
